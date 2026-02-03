@@ -1,5 +1,11 @@
 const express = require('express');
 const app = express();
+const sequelize = require('./common/database');
+const defineUser = require('./common/models/User');
+const User = defineUser(sequelize);
+
+// sync database
+sequelize.sync();
 
 app.use(express.json());
 
