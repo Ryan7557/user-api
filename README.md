@@ -1,2 +1,2 @@
 # user-api
-A user API to learning using postman
+A user REST API to learn using postman and express
