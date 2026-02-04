@@ -1,0 +1,18 @@
+const jwt = require('jsonwebtoken');
+
+const check = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader) {
+        return res.status(401).json({ error: 'No authorization header provided' });
+    }
+    const [type, token] = authHeader.split(' ');
+    if (type !== 'Bearer') {
+        return res.status(401).json({ error: 'Invalid authorization format' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    } catch (error) {
+        
+    }
+}

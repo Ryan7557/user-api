@@ -28,7 +28,7 @@ const generateAccessToken = (username, userId) =>
 const register = async (req, res) => {
     try {
         if (!validate(req.body)) {
-            return res.status(400).json({ error: 'Invalid input', details: validate.errors });
+            return res.status(400).json({ error: 'Invalid input', details: validate.errors });``
         }
 
         const { username, email, password, firstName, lastName, age } = req.body;
@@ -51,8 +51,8 @@ const register = async (req, res) => {
         console.error('Register error:', err);
         res.status(500).json({ success: false, error: err.message });
     } 
-}
+};
 
 module.exports = {
     register,
-}
+};
