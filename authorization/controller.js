@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const Ajv = require('ajv');
+const addFormats = require('ajv-formats');
 const sequelize = require('../common/database');
 const defineUser = require('../common/models/User');
 const { type } = require('os');
 const User = defineUser(sequelize);
 
-
 const ajv = new Ajv();
+addFormats(ajv);
 
 const schema = {
     type: 'object',
