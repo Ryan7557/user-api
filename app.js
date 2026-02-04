@@ -14,6 +14,14 @@ app.use(express.json());
 app.use('/', authRoutes);
 app.use('/user', userRoutes);
 
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        error: 'Something went wrong'
+    });
+});
+
 app.get('/', (req, res) => {
     res.json({
         status: 'Running',
