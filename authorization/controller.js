@@ -54,6 +54,25 @@ const register = async (req, res) => {
     } 
 };
 
+const login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const encrypted = encryptPassword(password);
+        const user = await User.findOne({ where: {username} });
+
+        if (!user || user.password !== encrypted) {
+            return res.status(401).json({ error: 'Invalid Credentials' });
+        }
+
+        const token = generateAccessToken(username, user.id);
+        res.json({ success: true, token });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+}
+
 module.exports = {
     register,
+    login
 };
