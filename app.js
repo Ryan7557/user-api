@@ -6,12 +6,13 @@ const sequelize = require('./common/database');
 const defineUser = require('./common/models/User');
 const User = defineUser(sequelize);
 const authRoutes = require('./authorization/routes');
-
+const userRoutes = require('./users/routes');
 // sync database
 sequelize.sync();
 
 app.use(express.json());
 app.use('/', authRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
     res.json({
