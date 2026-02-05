@@ -1,3 +1,4 @@
+// Load environment variables from .env file
 require('dotenv').config();
 
 const express = require('express');
@@ -7,13 +8,20 @@ const defineUser = require('./common/models/User');
 const User = defineUser(sequelize);
 const authRoutes = require('./authorization/routes');
 const userRoutes = require('./users/routes');
-// sync database
+
+// Synchronize the database with Sequelize models
 sequelize.sync();
 
+// Middleware to parse JSON request bodies
 app.use(express.json());
+
+// Mount authentication routes (signup, login)
 app.use('/', authRoutes);
+
+// Mount user routes (get user profile, get all users)
 app.use('/user', userRoutes);
 
+// Global error handling middleware - catches all errors and returns 500 response
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({
@@ -22,6 +30,7 @@ app.use((err, req, res, next) => {
     });
 });
 
+// Health check endpoint - returns server status and timestamp
 app.get('/', (req, res) => {
     res.json({
         status: 'Running',
@@ -29,6 +38,7 @@ app.get('/', (req, res) => {
     });
 });
 
+// Start the Express server on the specified port
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
